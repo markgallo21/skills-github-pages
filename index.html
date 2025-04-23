@@ -1,11 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Bold Welcome</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aime Leon Dore Authentication</title>
+    <script src="https://accounts.google.com/gsi/client"></script>
+    <style>
+      #signInDiv {
+        margin-top: 20px;
+        text-align: center;
+      }
+      #welcomeText {
+        display: none;
+        font-size: 24px;
+        color: #0c306b;
+        text-align: center;
+        margin-top: 20px;
+      }
+    </style>
 </head>
 <body>
+    <div id="signInDiv"></div>
+    <div id="welcomeText">Welcome!</div>
 
-<p><b>Welcome</b></p>
+    <script>
+      window.onload = function() {
+        google.accounts.id.initialize({
+          client_id: "729435842461-c3ijbvcj1j1e680j0qdm0s4vjojkbmgk.apps.googleusercontent.com", // Replace with your actual Google Client ID
+          callback: handleCredentialResponse,
+          ux_mode: "popup",
+          google_id_token: true,
+          hosted_domain: "aimeleondore.com"
+        });
+        google.accounts.id.renderButton(
+          document.getElementById("signInDiv"),
+          { theme: "outline", size: "large" }
+        );
+      };
 
+      function handleCredentialResponse(response) {
+        if (response.credential) {
+          const idToken = response.credential;
+          // IMPORTANT: You MUST send the ID token to your server for verification.
+          // DO NOT validate the token in client-side JavaScript.
+
+          // Example of sending the token to your server:
+          // fetch('/verify-login', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json'
+          //   },
+          //   body: JSON.stringify({ token: idToken })
+          // })
+          // .then(response => response.json())
+          // .then(data => {
+          //   if (data.success) {
+          //     document.getElementById("signInDiv").style.display = "none";
+          //     document.getElementById("welcomeText").style.display = "block";
+          //   } else {
+          //     alert('Login failed: ' + data.error);
+          //   }
+          // })
+          // .catch(error => {
+          //   console.error('Error sending token to server:', error);
+          //   alert('Login error: ' + error.message);
+          // });
+
+          // For demonstration, we'll just show the welcome message:
+          console.log("ID Token:", idToken); // Remove this in production
+          document.getElementById("signInDiv").style.display = "none";
+          document.getElementById("welcomeText").style.display = "block";
+
+        } else {
+          console.error("Credential response error:", response);
+          alert("Login failed. Check console for details.");
+        }
+      }
+    </script>
 </body>
 </html>
