@@ -26,7 +26,7 @@
     <script>
       window.onload = function() {
         google.accounts.id.initialize({
-          client_id: "729435842461-c3ijbvcj1j1e680j0qdm0s4vjojkbmgk.apps.googleusercontent.com", // Replace with your actual Google Client ID
+          client_id: "729435842461-c3ijbvcj1j1e680j0qdm0s4vjojkbmgk.apps.googleusercontent.com",
           callback: handleCredentialResponse,
           ux_mode: "popup",
           google_id_token: true,
@@ -45,31 +45,31 @@
           // DO NOT validate the token in client-side JavaScript.
 
           // Example of sending the token to your server:
-          // fetch('/verify-login', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   },
-          //   body: JSON.stringify({ token: idToken })
-          // })
-          // .then(response => response.json())
-          // .then(data => {
-          //   if (data.success) {
-          //     document.getElementById("signInDiv").style.display = "none";
-          //     document.getElementById("welcomeText").style.display = "block";
-          //   } else {
-          //     alert('Login failed: ' + data.error);
-          //   }
-          // })
-          // .catch(error => {
-          //   console.error('Error sending token to server:', error);
-          //   alert('Login error: ' + error.message);
-          // });
+          fetch('https://markgallo21.github.io/skills-github-pages/', {  // Use the provided redirect URI
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token: idToken })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              document.getElementById("signInDiv").style.display = "none";
+              document.getElementById("welcomeText").style.display = "block";
+            } else {
+              alert('Login failed: ' + data.error);
+            }
+          })
+          .catch(error => {
+            console.error('Error sending token to server:', error);
+            alert('Login error: ' + error.message);
+          });
 
           // For demonstration, we'll just show the welcome message:
-          console.log("ID Token:", idToken); // Remove this in production
-          document.getElementById("signInDiv").style.display = "none";
-          document.getElementById("welcomeText").style.display = "block";
+          // console.log("ID Token:", idToken);  // Remove this in production
+          // document.getElementById("signInDiv").style.display = "none";
+          // document.getElementById("welcomeText").style.display = "block";
 
         } else {
           console.error("Credential response error:", response);
