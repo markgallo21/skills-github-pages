@@ -16,6 +16,7 @@
         color: #0c306b;
         text-align: center;
         margin-top: 20px;
+        font-weight: bold; /* Added to make the text bold */
       }
     </style>
 </head>
@@ -69,7 +70,7 @@
           // For demonstration, we'll just show the welcome message:
           // console.log("ID Token:", idToken);  // Remove this in production
           // document.getElementById("signInDiv").style.display = "none";
-          // document.getElementById("welcomeText").style.display = "block";
+          document.getElementById("welcomeText").style.display = "block";
 
         } else {
           console.error("Credential response error:", response);
