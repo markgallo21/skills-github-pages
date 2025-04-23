@@ -16,13 +16,26 @@
         color: #0c306b;
         text-align: center;
         margin-top: 20px;
-        font-weight: bold; /* Added to make the text bold */
+        font-weight: bold;
+      }
+      #profileImage {
+        display: none;  /* Initially hide the image */
+        margin-top: 20px;
+        text-align: center;
+      }
+      #profileImage img {
+        border-radius: 50%; /* Make it a circle */
+        width: 100px; /* Adjust size as needed */
+        height: 100px;
       }
     </style>
 </head>
 <body>
     <div id="signInDiv"></div>
     <div id="welcomeText">Welcome!</div>
+    <div id="profileImage">
+        <img src="https://i.ibb.co/1GBdD1h1/Screenshot-2025-04-21-at-10-13-34-AM.png" alt="Profile">
+    </div>
 
     <script>
       window.onload = function() {
@@ -42,11 +55,8 @@
       function handleCredentialResponse(response) {
         if (response.credential) {
           const idToken = response.credential;
-          // IMPORTANT: You MUST send the ID token to your server for verification.
-          // DO NOT validate the token in client-side JavaScript.
 
-          // Example of sending the token to your server:
-          fetch('https://markgallo21.github.io/skills-github-pages/', {  // Use the provided redirect URI
+          fetch('https://markgallo21.github.io/skills-github-pages/', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -58,6 +68,7 @@
             if (data.success) {
               document.getElementById("signInDiv").style.display = "none";
               document.getElementById("welcomeText").style.display = "block";
+              document.getElementById("profileImage").style.display = "block"; // Show the image
             } else {
               alert('Login failed: ' + data.error);
             }
@@ -66,11 +77,6 @@
             console.error('Error sending token to server:', error);
             alert('Login error: ' + error.message);
           });
-
-          // For demonstration, we'll just show the welcome message:
-          // console.log("ID Token:", idToken);  // Remove this in production
-          // document.getElementById("signInDiv").style.display = "none";
-          document.getElementById("welcomeText").style.display = "block";
 
         } else {
           console.error("Credential response error:", response);
